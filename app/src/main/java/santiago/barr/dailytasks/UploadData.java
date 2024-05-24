@@ -21,20 +21,20 @@ public class UploadData {
     }
 
     public static void uploadUserData(@NonNull TextView textViewNombre, TextView textViewEmail, Spinner spinnerAge, Spinner spinnerGender) {
-        // Obtener la instancia de Firestore
+        // instancia de firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Crear un nuevo objeto usuario con los datos
+        // Crea un nuevo objeto usuario con los datos
         HashMap<String, Object> user = new HashMap<>();
         user.put("nombre", textViewNombre.getText().toString());
         user.put("email", textViewEmail.getText().toString());
         user.put("edad", spinnerAge.getSelectedItem().toString());
         user.put("genero", spinnerGender.getSelectedItem().toString());
 
-        // Usar el correo electrónico como identificador único para el documento
+        // Usa el correo electrónico como identificador único para el documento
         String emailId = textViewEmail.getText().toString();
 
-        // Subir los datos al documento con ID basado en el correo electrónico
+        // Sube los datos al documento con ID basado en el correo electrónico
         db.collection("usuario").document(emailId).set(user)
                 .addOnSuccessListener(aVoid -> {
                     // Manejar éxito

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- App name -->
     <string name="app_name">Daily Tasks</string>
-
-    <!-- General strings -->
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -14,11 +11,10 @@
     <string name="user_profile">User Profile</string>
     <string name="logout">Logout</string>
     <string name="back">Back</string>
-
-    <!-- Dashboard strings -->
     <string name="welcome_message">Welcome to Daily Tasks</string>
     <string name="no_groups_message">No groups available</string>
     <string name="create_group">Create Group</string>
     <string name="view_groups">View Groups</string>
     <string name="invitations">Invitations</string>
 </resources>
+

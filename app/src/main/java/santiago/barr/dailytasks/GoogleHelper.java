@@ -83,7 +83,6 @@ public class GoogleHelper {
         mGoogleSignInClient.signOut().addOnCompleteListener(mActivity, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                // Opcional: Cerrar sesión de Firebase si estás utilizando Firebase Auth
                 FirebaseAuth.getInstance().signOut();
 
                 // Invocar el callback de sign out completado
@@ -93,7 +92,7 @@ public class GoogleHelper {
                 // Redirige al usuario a la MainActivity después del cierre de sesión
                 Intent intent = new Intent(mActivity, MainActivity.class);
                 mActivity.startActivity(intent);
-                mActivity.finish(); // Opcional: Llama a finish() si quieres sacar de la pila de actividades la actividad actual
+                mActivity.finish();
             }
         });
     }

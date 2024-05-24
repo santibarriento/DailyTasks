@@ -77,8 +77,6 @@ public class InviteActivity extends AppCompatActivity {
     }
 
     private void sendNotification(String username, String inviteId) {
-        // Lógica para enviar una notificación en la aplicación
-        // Puedes usar Firebase Cloud Messaging (FCM) para enviar notificaciones push
         System.out.println("Notificación enviada a: " + username);
         System.out.println("ID de Invitación: " + inviteId);
     }

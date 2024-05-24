@@ -36,12 +36,10 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        welcomeMessage = findViewById(R.id.welcome_message);
         noGroupsMessage = findViewById(R.id.no_groups_message);
         groupsListView = findViewById(R.id.groups_list);
         createGroupButton = findViewById(R.id.create_group_button);
         viewGroupsButton = findViewById(R.id.view_groups_button);
-        invitationsButton = findViewById(R.id.invitations_button);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();

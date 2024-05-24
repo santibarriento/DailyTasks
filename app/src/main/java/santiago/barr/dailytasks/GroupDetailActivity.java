@@ -37,8 +37,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         loadGroupDetails(groupId);
 
         addMemberButton.setOnClickListener(v -> {
-            // Lógica para añadir miembros al grupo
-            Toast.makeText(GroupDetailActivity.this, "Funcionalidad para añadir miembros en desarrollo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GroupDetailActivity.this, "falta añadir miembros", Toast.LENGTH_SHORT).show();
         });
     }
 

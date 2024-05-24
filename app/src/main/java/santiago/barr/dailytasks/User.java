@@ -8,11 +8,11 @@ public class User {
     public boolean notifications;
     public boolean darkTheme;
 
-    // Constructor vacío necesario para llamadas a DataSnapshot.getValue(User.class)
+    // constructor vacío necesario para llamadas a DataSnapshot.getValue(User.class)
     public User() {
     }
 
-    // Constructor con todos los parámetros
+    // constructor
     public User(String userName, String email, String photoUrl, String phone, boolean notifications, boolean darkTheme) {
         this.userName = userName;
         this.email = email;

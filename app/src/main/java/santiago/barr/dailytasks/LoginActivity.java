@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         .setServerClientId(getString(R.string.default_web_client_id))
-                        .setFilterByAuthorizedAccounts(false)  // Permite iniciar sesión con cualquier cuenta de Google
+                        .setFilterByAuthorizedAccounts(false)  // si no tiene cuenta en la base de datos la crea
                         .build())
                 .build();
 
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Log.d(TAG, "User is signed in");
             Toast.makeText(this, "User is signed in", Toast.LENGTH_SHORT).show();
-            // Redirigir a DashboardActivity
+            // va al DashboardActivity
             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             startActivity(intent);
             finish();

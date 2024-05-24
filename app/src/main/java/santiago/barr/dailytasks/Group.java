@@ -5,8 +5,6 @@ public class Group {
     private String nombre;
     private String descripcion;
     private String admin;
-
-    // Constructor vacío requerido para Firebase
     public Group() {}
 
     public Group(String id, String nombre, String descripcion, String admin) {
