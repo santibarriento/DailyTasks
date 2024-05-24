@@ -9,16 +9,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:background="@color/toolbar_color">
-        <!-- Iconos y título -->
-        <ImageButton
-            android:id="@+id/user_profile_button"
-            android:layout_width="55dp"
-            android:layout_height="49dp"
-            android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/user_profile"
-            android:scaleType="centerInside"
-            android:src="@drawable/perfil" />
     </RelativeLayout>
 
     <ScrollView
@@ -44,31 +34,11 @@
             <ListView
                 android:id="@+id/groups_list"
                 android:layout_width="match_parent"
-                android:layout_height="361dp"
+                android:layout_height="619dp"
                 android:layout_below="@id/welcome_message"
                 android:layout_marginTop="16dp"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="8dp" />
-
-            <Button
-                android:id="@+id/create_group_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/button_green"
-                android:text="Crear Grupo"
-                android:textColor="@color/white" />
-
-            <Button
-                android:id="@+id/view_groups_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/create_group_button"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/button_green"
-                android:text="Ver Grupos"
-                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App name -->
+    <string name="app_name">Daily Tasks</string>
+
+    <!-- General strings -->
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="register">Registrarse</string>
+    <string name="default_web_client_id">1099458425964-rje1l9li3mcifa0ketqjgdmtuo7l1ndm.apps.googleusercontent.com</string>
+    <string name="googlebutton">Iniciar Sesión con Google</string>
+    <string name="welcometext">¡Bienvenido a Daily Tasks!</string>
+    <string name="user_profile">Perfil de usuario</string>
+    <string name="logout">Salir</string>
+    <string name="back">Atrás</string>
+
+    <!-- Dashboard strings -->
+    <string name="welcome_message">Bienvenido a Daily Tasks</string>
+    <string name="no_groups_message">No hay grupos disponibles</string>
+    <string name="create_group">Crear Grupo</string>
+    <string name="view_groups">Ver Grupos</string>
+    <string name="invitations">Invitaciones</string>
+</resources>

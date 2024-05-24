@@ -16,7 +16,6 @@ import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.api.ApiException;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
@@ -35,12 +34,8 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         oneTapClient = Identity.getSignInClient(this);
-
-        // No need to set the onClickListener here anymore
-        prepareOneTapSignIn();
     }
 
-    // Este método debe coincidir con el nombre en el atributo android:onClick
     public void ABRIMEELGOOGLE(View view) {
         Log.d(TAG, "Sign in button clicked");
         prepareOneTapSignIn();
@@ -51,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         .setServerClientId(getString(R.string.default_web_client_id))
-                        .setFilterByAuthorizedAccounts(true)
+                        .setFilterByAuthorizedAccounts(false)  // Permite iniciar sesión con cualquier cuenta de Google
                         .build())
                 .build();
 
@@ -112,7 +107,10 @@ public class LoginActivity extends AppCompatActivity {
         if (user != null) {
             Log.d(TAG, "User is signed in");
             Toast.makeText(this, "User is signed in", Toast.LENGTH_SHORT).show();
-            // Navigate to the main activity or wherever you need
+            // Redirigir a DashboardActivity
+            Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             Log.d(TAG, "Authentication Failed.");
             Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show();

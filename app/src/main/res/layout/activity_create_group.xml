@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_gray"
+    tools:context=".CreateGroupActivity">
+
+    <EditText
+        android:id="@+id/group_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del grupo"
+        android:background="@color/button_green"
+        android:textColor="@color/white"
+        android:padding="16dp"
+        android:textColorHint="@color/white"/>
+
+    <EditText
+        android:id="@+id/group_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción del grupo"
+        android:background="@color/button_green"
+        android:textColor="@color/white"
+        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="@color/white"/>
+
+    <Button
+        android:id="@+id/create_group_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear Grupo"
+        android:backgroundTint="@color/button_green"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

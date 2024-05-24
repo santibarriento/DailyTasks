@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background_gray"
+    tools:context=".AcceptInviteActivity">
+
+    <TextView
+        android:id="@+id/invite_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Invitaciones para grupos"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:padding="16dp" />
+
+    <Button
+        android:id="@+id/acceptInviteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar Invitación"
+        android:backgroundTint="@color/button_green"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

@@ -1,9 +1,7 @@
 package santiago.barr.dailytasks;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +19,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DashboardActivity extends AppCompatActivity {
+public class ViewGroupsActivity extends AppCompatActivity {
 
-    private TextView welcomeMessage, noGroupsMessage;
+    private TextView noGroupsMessage;
     private ListView groupsListView;
-    private Button createGroupButton, viewGroupsButton, invitationsButton;
     private FirebaseAuth mAuth;
     private DatabaseReference userGroupsReference, groupsReference;
     private ArrayList<Group> groupsList;
@@ -34,14 +31,10 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        setContentView(R.layout.activity_view_groups);
 
-        welcomeMessage = findViewById(R.id.welcome_message);
         noGroupsMessage = findViewById(R.id.no_groups_message);
         groupsListView = findViewById(R.id.groups_list);
-        createGroupButton = findViewById(R.id.create_group_button);
-        viewGroupsButton = findViewById(R.id.view_groups_button);
-        invitationsButton = findViewById(R.id.invitations_button);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -54,21 +47,6 @@ public class DashboardActivity extends AppCompatActivity {
         groupsListView.setAdapter(groupAdapter);
 
         loadUserGroups();
-
-        createGroupButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, CreateGroupActivity.class);
-            startActivity(intent);
-        });
-
-        viewGroupsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, ViewGroupsActivity.class);
-            startActivity(intent);
-        });
-
-        invitationsButton.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardActivity.this, AcceptInviteActivity.class);
-            startActivity(intent);
-        });
     }
 
     private void loadUserGroups() {
@@ -90,7 +68,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DashboardActivity.this, "Error al cargar los grupos: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ViewGroupsActivity.this, "Error al cargar los grupos: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -110,7 +88,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DashboardActivity.this, "Error al cargar los detalles del grupo: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(ViewGroupsActivity.this, "Error al cargar los detalles del grupo: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
