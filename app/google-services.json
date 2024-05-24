@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1099458425964",
+    "project_id": "daily-tasks-eea7e",
+    "storage_bucket": "daily-tasks-eea7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1099458425964:android:f4173e2c881a3ba7875449",
+        "android_client_info": {
+          "package_name": "santiago.barr.dailytasks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1099458425964-rje1l9li3mcifa0ketqjgdmtuo7l1ndm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByOUyYs4shgYh7Aci0F_OCgMVNsAHwO7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1099458425964-rje1l9li3mcifa0ketqjgdmtuo7l1ndm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

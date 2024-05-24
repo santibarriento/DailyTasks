@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Daily Tasks</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login">login</string>
+    <string name="register">Register</string>
+    <string name="default_web_client_id">1099458425964-rje1l9li3mcifa0ketqjgdmtuo7l1ndm.apps.googleusercontent.com</string>
+        <string-array name="gender_options">
+            <item>Masculino</item>
+            <item>Femenino</item>
+        </string-array>
+</resources>
