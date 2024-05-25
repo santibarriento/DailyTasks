@@ -69,6 +69,16 @@
                 android:backgroundTint="@color/button_green"
                 android:text="Ver Grupos"
                 android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/invitations_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/view_groups_button"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/button_green"
+                android:text="Invitaciones"
+                android:textColor="@color/white" />
         </LinearLayout>
     </ScrollView>
 

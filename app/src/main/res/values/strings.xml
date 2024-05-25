@@ -16,5 +16,8 @@
     <string name="create_group">Create Group</string>
     <string name="view_groups">View Groups</string>
     <string name="invitations">Invitations</string>
+    <string name="group_desc">Group description</string>
+    <string name="group_name">Group name</string>
+    <string name="invite_email">User e-mail</string>
+    <string name="send_invitation">Send invitation</string>
 </resources>
-

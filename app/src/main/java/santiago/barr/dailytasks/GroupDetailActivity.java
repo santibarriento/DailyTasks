@@ -1,7 +1,6 @@
 package santiago.barr.dailytasks;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 public class GroupDetailActivity extends AppCompatActivity {
 
     private TextView groupNameDetail, groupDescriptionDetail;
-    private Button addMemberButton;
+    private Button addMemberButton, backButton;
     private DatabaseReference db;
     private String groupId;
 
@@ -30,6 +29,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         groupNameDetail = findViewById(R.id.group_name_detail);
         groupDescriptionDetail = findViewById(R.id.group_description_detail);
         addMemberButton = findViewById(R.id.add_member_button);
+        backButton = findViewById(R.id.back_button);
 
         db = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference();
         groupId = getIntent().getStringExtra("groupId");
@@ -39,6 +39,8 @@ public class GroupDetailActivity extends AppCompatActivity {
         addMemberButton.setOnClickListener(v -> {
             Toast.makeText(GroupDetailActivity.this, "falta añadir miembros", Toast.LENGTH_SHORT).show();
         });
+
+        backButton.setOnClickListener(v -> finish());
     }
 
     private void loadGroupDetails(String groupId) {

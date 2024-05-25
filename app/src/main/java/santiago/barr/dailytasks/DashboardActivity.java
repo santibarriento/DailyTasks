@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     private TextView welcomeMessage, noGroupsMessage;
     private ListView groupsListView;
     private Button createGroupButton, viewGroupsButton, invitationsButton;
+    private ImageButton userProfileButton;
     private FirebaseAuth mAuth;
     private DatabaseReference userGroupsReference, groupsReference;
     private ArrayList<Group> groupsList;
@@ -40,6 +42,8 @@ public class DashboardActivity extends AppCompatActivity {
         groupsListView = findViewById(R.id.groups_list);
         createGroupButton = findViewById(R.id.create_group_button);
         viewGroupsButton = findViewById(R.id.view_groups_button);
+        invitationsButton = findViewById(R.id.invitations_button);
+        userProfileButton = findViewById(R.id.user_profile_button); // Inicializa el botón de perfil
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -65,6 +69,12 @@ public class DashboardActivity extends AppCompatActivity {
 
         invitationsButton.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, AcceptInviteActivity.class);
+            startActivity(intent);
+        });
+
+        userProfileButton.setOnClickListener(v -> {
+            // Acción al hacer clic en el botón de perfil
+            Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
             startActivity(intent);
         });
     }

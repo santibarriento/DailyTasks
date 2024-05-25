@@ -83,9 +83,9 @@
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:text="Volver"
+        android:text="@string/back"
         android:backgroundTint="@color/button_green"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"/>
 </LinearLayout>

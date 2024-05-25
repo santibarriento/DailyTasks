@@ -2,7 +2,6 @@ package santiago.barr.dailytasks;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,8 +18,8 @@ import java.util.Map;
 
 public class InviteActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
-    private Button sendInviteButton;
+    private EditText emailEditText;
+    private Button sendInviteButton, backButton;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -29,24 +28,21 @@ public class InviteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite);
 
-        usernameEditText = findViewById(R.id.usernameEditText);
+        emailEditText = findViewById(R.id.emailEditText);
         sendInviteButton = findViewById(R.id.sendInviteButton);
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        sendInviteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendInvite();
-            }
-        });
+        sendInviteButton.setOnClickListener(v -> sendInvite());
     }
 
     private void sendInvite() {
-        String username = usernameEditText.getText().toString().trim();
-        if (TextUtils.isEmpty(username)) {
-            Toast.makeText(this, "Por favor, ingresa un nombre de usuario", Toast.LENGTH_SHORT).show();
+        String email = emailEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(email)) {
+            Toast.makeText(this, "Por favor, ingresa un correo electrónico", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -58,7 +54,7 @@ public class InviteActivity extends AppCompatActivity {
 
         String inviteId = databaseReference.child("invitaciones").push().getKey();
         Map<String, Object> inviteData = new HashMap<>();
-        inviteData.put("username", username);
+        inviteData.put("email", email);
         inviteData.put("enviadoPor", currentUser.getUid());
         inviteData.put("estado", "pendiente");
 
@@ -66,7 +62,7 @@ public class InviteActivity extends AppCompatActivity {
             databaseReference.child("invitaciones").child(inviteId).setValue(inviteData)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            sendNotification(username, inviteId);
+                            sendEmailNotification(email, inviteId);
                             Toast.makeText(this, "Invitación enviada", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
@@ -76,8 +72,13 @@ public class InviteActivity extends AppCompatActivity {
         }
     }
 
-    private void sendNotification(String username, String inviteId) {
-        System.out.println("Notificación enviada a: " + username);
+    private void sendEmailNotification(String email, String inviteId) {
+        // Aquí debes implementar la lógica para enviar el correo electrónico
+        // Puedes usar un servicio como SendGrid, Amazon SES, etc.
+        // Ejemplo:
+        // EmailService.send(email, "Invitación a Daily Tasks", "Has sido invitado a unirte a un grupo en Daily Tasks. Código de invitación: " + inviteId);
+
+        System.out.println("Correo enviado a: " + email);
         System.out.println("ID de Invitación: " + inviteId);
     }
 }

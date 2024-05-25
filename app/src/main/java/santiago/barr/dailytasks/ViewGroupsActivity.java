@@ -2,6 +2,7 @@ package santiago.barr.dailytasks;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class ViewGroupsActivity extends AppCompatActivity {
     private DatabaseReference userGroupsReference, groupsReference;
     private ArrayList<Group> groupsList;
     private GroupAdapter groupAdapter;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,8 @@ public class ViewGroupsActivity extends AppCompatActivity {
         groupsList = new ArrayList<>();
         groupAdapter = new GroupAdapter(this, groupsList);
         groupsListView.setAdapter(groupAdapter);
-
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
         loadUserGroups();
     }
 

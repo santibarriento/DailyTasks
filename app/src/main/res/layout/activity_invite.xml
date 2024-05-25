@@ -8,15 +8,25 @@
     tools:context=".InviteActivity">
 
     <EditText
-        android:id="@+id/usernameEditText"
+        android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de Usuario del invitado"
+        android:hint="@string/invite_email"
         android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/sendInviteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Enviar Invitación" />
+        android:text="@string/send_invitation" />
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:backgroundTint="@color/button_green"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"/>
 </LinearLayout>

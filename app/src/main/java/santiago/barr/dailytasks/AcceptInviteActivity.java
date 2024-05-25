@@ -17,7 +17,7 @@ public class AcceptInviteActivity extends AppCompatActivity {
     private Button acceptInviteButton;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
-
+    private Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +28,8 @@ public class AcceptInviteActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         String inviteId = getIntent().getStringExtra("inviteId");
-
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
         acceptInviteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

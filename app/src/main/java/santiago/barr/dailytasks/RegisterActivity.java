@@ -21,7 +21,7 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText usernameEditText, emailEditText, passwordEditText;
-    private Button registerButton;
+    private Button registerButton,backButton;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -37,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

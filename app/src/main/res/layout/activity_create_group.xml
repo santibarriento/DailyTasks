@@ -12,7 +12,7 @@
         android:id="@+id/group_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre del grupo"
+        android:hint="@string/group_name"
         android:background="@color/button_green"
         android:textColor="@color/white"
         android:padding="16dp"
@@ -22,7 +22,7 @@
         android:id="@+id/group_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descripción del grupo"
+        android:hint="@string/group_desc"
         android:background="@color/button_green"
         android:textColor="@color/white"
         android:padding="16dp"
@@ -33,8 +33,17 @@
         android:id="@+id/create_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crear Grupo"
+        android:text="@string/create_group"
         android:backgroundTint="@color/button_green"
         android:textColor="@color/white"
         android:layout_marginTop="16dp"/>
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/back"
+        android:backgroundTint="@color/button_green"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="16dp"/>
 </LinearLayout>

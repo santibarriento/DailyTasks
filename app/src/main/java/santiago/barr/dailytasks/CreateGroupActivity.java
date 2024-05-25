@@ -20,7 +20,7 @@ import java.util.Map;
 public class CreateGroupActivity extends AppCompatActivity {
 
     private EditText groupNameEditText, groupDescriptionEditText;
-    private Button createGroupButton;
+    private Button createGroupButton, backButton;
     private DatabaseReference db;
     private FirebaseAuth mAuth;
 
@@ -32,7 +32,8 @@ public class CreateGroupActivity extends AppCompatActivity {
         groupNameEditText = findViewById(R.id.group_name);
         groupDescriptionEditText = findViewById(R.id.group_description);
         createGroupButton = findViewById(R.id.create_group_button);
-
+        backButton = findViewById(R.id.back_button);
+        backButton.setOnClickListener(v -> finish());
         db = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference();
         mAuth = FirebaseAuth.getInstance();
 

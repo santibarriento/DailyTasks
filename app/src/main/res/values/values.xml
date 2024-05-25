@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Ejemplo de un elemento item válido -->
+    <item name="example_item" type="id"/>
 </resources>
-
