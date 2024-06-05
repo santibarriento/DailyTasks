@@ -3,6 +3,7 @@ package santiago.barr.dailytasks;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -35,31 +36,32 @@ public class UserProfileActivity extends AppCompatActivity {
     private ImageView userProfileImage;
     private TextView userName, userEmail;
     private Spinner userAge, userGender;
-    private EditText userPhone; // Nuevo campo de número de teléfono
-    private Button logoutButton, updateDataButton, backButton;
+    private EditText userPhone, editTextNewUserName; // Nuevo campo para el nombre de usuario
+    private Button logoutButton, updateDataButton, updateUserNameButton, backButton;
     private FirebaseAuth mAuth;
     private RealtimeDatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_google_acc);
+        setContentView(R.layout.activity_user_profile);
 
         userProfileImage = findViewById(R.id.imageView);
         userName = findViewById(R.id.textViewNombre);
         userEmail = findViewById(R.id.textViewEmail);
         userAge = findViewById(R.id.spinnerAge);
         userGender = findViewById(R.id.spinnerGender);
-        userPhone = findViewById(R.id.editTextPhone); // Inicializar el campo de número de teléfono
+        userPhone = findViewById(R.id.editTextPhone);
+        editTextNewUserName = findViewById(R.id.editTextNewUserName);
         logoutButton = findViewById(R.id.buttonSignOff);
         updateDataButton = findViewById(R.id.buttonData);
+        updateUserNameButton = findViewById(R.id.buttonUpdateUserName);
         backButton = findViewById(R.id.back_button);
 
         mAuth = FirebaseAuth.getInstance();
         databaseHelper = new RealtimeDatabaseHelper(this);
         FirebaseUser user = mAuth.getCurrentUser();
 
-        // Inicializar opciones de edad en el spinner
         List<String> ageOptions = new ArrayList<>();
         for (int i = 18; i <= 99; i++) {
             ageOptions.add(Integer.toString(i));
@@ -84,7 +86,7 @@ public class UserProfileActivity extends AppCompatActivity {
         adapterAge.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userAge.setAdapter(adapterAge);
 
-        // Inicializar opciones de género en el spinner
+
         String[] genderArray = getResources().getStringArray(R.array.gender_options);
         ArrayAdapter<String> adapterGender = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genderArray) {
             @NonNull
@@ -121,7 +123,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     if (dataSnapshot.exists()) {
                         userAge.setSelection(adapterAge.getPosition(dataSnapshot.child("edad").getValue(String.class)));
                         userGender.setSelection(adapterGender.getPosition(dataSnapshot.child("genero").getValue(String.class)));
-                        userPhone.setText(dataSnapshot.child("telefono").getValue(String.class)); // Mostrar el número de teléfono si existe en la base de datos
+                        userPhone.setText(dataSnapshot.child("phone").getValue(String.class)); // Mostrar el número de teléfono si existe en la base de datos
+                        userName.setText(dataSnapshot.child("userName").getValue(String.class)); // Mostrar el nombre de usuario
                     }
                 }
 
@@ -145,6 +148,10 @@ public class UserProfileActivity extends AppCompatActivity {
         updateDataButton.setOnClickListener(v -> {
             updateUserProfile();
         });
+
+        updateUserNameButton.setOnClickListener(v -> {
+            updateUserName();
+        });
     }
 
     private void updateUserProfile() {
@@ -152,10 +159,32 @@ public class UserProfileActivity extends AppCompatActivity {
         if (user != null) {
             String age = userAge.getSelectedItem().toString();
             String gender = userGender.getSelectedItem().toString();
-            String phone = userPhone.getText().toString(); // Obtener el número de teléfono
+            String phone = userPhone.getText().toString();
 
             databaseHelper.saveUserData(userName.getText().toString(), userEmail.getText().toString(), user.getPhotoUrl().toString(), phone, true, false);
             databaseHelper.saveUserProfileData(user.getUid(), age, gender);
+        }
+    }
+
+    private void updateUserName() {
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String newUserName = editTextNewUserName.getText().toString().trim();
+            if (TextUtils.isEmpty(newUserName)) {
+                Toast.makeText(this, "Por favor, ingresa un nombre de usuario", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            DatabaseReference db = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("usuarios").child(user.getUid());
+            db.child("userName").setValue(newUserName)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            userName.setText(newUserName);
+                            Toast.makeText(UserProfileActivity.this, "Nombre de usuario actualizado", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(UserProfileActivity.this, "Error al actualizar el nombre de usuario", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 }

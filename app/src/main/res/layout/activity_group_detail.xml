@@ -16,7 +16,7 @@
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:padding="16dp"/>
+        android:padding="16dp" />
 
     <TextView
         android:id="@+id/group_description_detail"
@@ -25,24 +25,75 @@
         android:text="Descripción del Grupo"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:padding="16dp"/>
+        android:padding="16dp" />
 
-    <Button
-        android:id="@+id/add_member_button"
+    <Spinner
+        android:id="@+id/user_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Añadir Miembro"
+        android:layout_marginTop="16dp"
+        android:background="@color/button_green"
+        android:textColor="@color/white"/>
+
+    <EditText
+        android:id="@+id/task_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Título de la tarea"
+        android:background="@color/button_green"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/task_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Descripción de la tarea"
+        android:background="@color/button_green"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/task_due_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Fecha de vencimiento"
+        android:background="@color/button_green"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir Tarea"
         android:backgroundTint="@color/button_green"
         android:textColor="@color/white"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasks_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/invite_member_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Invitar Miembro"
+        android:backgroundTint="@color/button_green"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/back"
+        android:text="Atrás"
         android:backgroundTint="@color/button_green"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp" />
 </LinearLayout>

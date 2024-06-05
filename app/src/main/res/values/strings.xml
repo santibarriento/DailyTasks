@@ -20,4 +20,25 @@
     <string name="group_name">Group name</string>
     <string name="invite_email">User e-mail</string>
     <string name="send_invitation">Send invitation</string>
+    <string name="saveusername">Save username</string>
+    <string name="newusername">New username</string>
+    <string name="telefono">Phone number</string>
+    <string name="updatedata">Update data</string>
+    <string name="addmember">Add member\n</string>
+    <string name="invite">Invite</string>
+    <string name="seegroups">See Groups</string>
+    <string name="nohaygrupos">Create or join a group!</string>
+    <string name="invitation_msg">Invitation message</string>
+    <string name="duedatetask">Due date</string>
+    <string name="TaskDesc">Task desc</string>
+    <string name="tasktitle">Task title</string>
+    <string name="taskassig">Task assigned to</string>
+    <string name="status">Status</string>
+    <string-array name="task_status_array">
+            <item>Pendiente</item>
+            <item>En progreso</item>
+            <item>Completada</item>
+    </string-array>
+
+
 </resources>

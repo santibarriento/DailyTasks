@@ -1,65 +1,70 @@
 package santiago.barr.dailytasks;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AcceptInviteActivity extends AppCompatActivity {
 
-    private Button acceptInviteButton;
-    private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
-    private Button backButton;
+    private RecyclerView recyclerViewInvites;
+    private InviteAdapter inviteAdapter;
+    private List<Invite> inviteList;
+    private DatabaseReference db;
+    private String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept_invite);
 
-        acceptInviteButton = findViewById(R.id.acceptInviteButton);
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
+        recyclerViewInvites = findViewById(R.id.recyclerViewInvites);
+        recyclerViewInvites.setLayoutManager(new LinearLayoutManager(this));
+        inviteList = new ArrayList<>();
+        inviteAdapter = new InviteAdapter(inviteList, this);
+        recyclerViewInvites.setAdapter(inviteAdapter);
 
-        String inviteId = getIntent().getStringExtra("inviteId");
-        backButton = findViewById(R.id.back_button);
+        db = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference();
+        userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+        loadInvites();
+
+        Button backButton = findViewById(R.id.back_button);
         backButton.setOnClickListener(v -> finish());
-        acceptInviteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                acceptInvite(inviteId);
-            }
-        });
     }
 
-    private void acceptInvite(String inviteId) {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(this, "Error: usuario no autenticado", Toast.LENGTH_SHORT).show();
-            return;
-        }
+    private void loadInvites() {
+        db.child("invitaciones").orderByChild("email").equalTo(userEmail)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        inviteList.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            Invite invite = snapshot.getValue(Invite.class);
+                            if (invite != null) {
+                                inviteList.add(invite);
+                            }
+                        }
+                        inviteAdapter.notifyDataSetChanged();
+                    }
 
-        databaseReference.child("invitaciones").child(inviteId).child("estado").setValue("aceptada")
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        databaseReference.child("grupos").child(inviteId).child("miembros")
-                                .child(currentUser.getUid()).setValue(true)
-                                .addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        Toast.makeText(this, "Invitación aceptada", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    } else {
-                                        Toast.makeText(this, "Error al aceptar la invitación", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    } else {
-                        Toast.makeText(this, "Error al aceptar la invitación", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(AcceptInviteActivity.this, "Error al cargar invitaciones", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

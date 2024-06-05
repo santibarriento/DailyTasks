@@ -24,10 +24,10 @@ import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private TextView welcomeMessage, noGroupsMessage;
+    private TextView noGroupsMessage;
     private ListView groupsListView;
     private Button createGroupButton, viewGroupsButton, invitationsButton;
-    private ImageButton userProfileButton;
+    private ImageButton userProfileButton; // Agregar referencia para el botón de perfil de usuario
     private FirebaseAuth mAuth;
     private DatabaseReference userGroupsReference, groupsReference;
     private ArrayList<Group> groupsList;
@@ -43,7 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
         createGroupButton = findViewById(R.id.create_group_button);
         viewGroupsButton = findViewById(R.id.view_groups_button);
         invitationsButton = findViewById(R.id.invitations_button);
-        userProfileButton = findViewById(R.id.user_profile_button); // Inicializa el botón de perfil
+        userProfileButton = findViewById(R.id.user_profile_button); // Inicializar el botón de perfil de usuario
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -73,7 +73,6 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         userProfileButton.setOnClickListener(v -> {
-            // Acción al hacer clic en el botón de perfil
             Intent intent = new Intent(DashboardActivity.this, UserProfileActivity.class);
             startActivity(intent);
         });

@@ -56,9 +56,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Número de Teléfono"
+        android:hint="@string/telefono"
         android:inputType="phone"
         android:background="@color/button_green"
+        android:textColor="@color/white" />
+
+    <EditText
+        android:id="@+id/editTextNewUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/newusername"
+        android:background="@color/button_green"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/buttonUpdateUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/saveusername"
+        android:backgroundTint="@color/button_green"
         android:textColor="@color/white" />
 
     <Button
@@ -66,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Actualizar Datos"
+        android:text="@string/updatedata"
         android:backgroundTint="@color/button_green"
         android:textColor="@color/white" />
 
@@ -75,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Cerrar Sesión"
+        android:text="@string/logout"
         android:backgroundTint="@color/red"
         android:textColor="@color/white" />
 

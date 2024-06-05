@@ -12,7 +12,7 @@
     <string name="googlebutton">Iniciar Sesión con Google</string>
     <string name="welcometext">¡Bienvenido a Daily Tasks!</string>
     <string name="user_profile">Perfil de usuario</string>
-    <string name="logout">Salir</string>
+    <string name="logout">Cerrar sesión</string>
     <string name="back">Atrás</string>
 
     <!-- Dashboard strings -->
@@ -25,4 +25,18 @@
     <string name="group_name">Nombre del grupo</string>
     <string name="invite_email">E-mail del usuario</string>
     <string name="send_invitation">Enviar invitación</string>
+    <string name="saveusername">Guardar nombre de usuario</string>
+    <string name="newusername">Nuevo nombre de usuario</string>
+    <string name="telefono">Número de teléfono</string>
+    <string name="updatedata">Actualizar datos</string>
+    <string name="addmember">Añadir miembro\n</string>
+    <string name="invite">Invite</string>
+    <string name="seegroups">See Groups</string>
+    <string name="nohaygrupos">Create or join a group!</string>
+    <string name="invitation_msg">Invitation message</string>
+    <string name="duedatetask">Due date</string>
+    <string name="TaskDesc">Task desc</string>
+    <string name="tasktitle">Task title</string>
+    <string name="taskassig">Task assigned to</string>
+    <string name="status">Status</string>
 </resources>
