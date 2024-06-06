@@ -22,12 +22,18 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que representa el dashboard de la aplicación, donde el usuario puede ver y gestionar sus grupos.
+ */
 public class DashboardActivity extends AppCompatActivity {
 
+    // Elementos de la interfaz de usuario
     private TextView noGroupsMessage;
     private ListView groupsListView;
     private Button createGroupButton, viewGroupsButton, invitationsButton;
-    private ImageButton userProfileButton; // Agregar referencia para el botón de perfil de usuario
+    private ImageButton userProfileButton; // Botón para el perfil de usuario
+
+    // Firebase Auth y Database References
     private FirebaseAuth mAuth;
     private DatabaseReference userGroupsReference, groupsReference;
     private ArrayList<Group> groupsList;
@@ -38,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        // Inicializar elementos de la interfaz de usuario
         noGroupsMessage = findViewById(R.id.no_groups_message);
         groupsListView = findViewById(R.id.groups_list);
         createGroupButton = findViewById(R.id.create_group_button);
@@ -45,18 +52,25 @@ public class DashboardActivity extends AppCompatActivity {
         invitationsButton = findViewById(R.id.invitations_button);
         userProfileButton = findViewById(R.id.user_profile_button); // Inicializar el botón de perfil de usuario
 
+        // Inicializar Firebase Auth y obtener el usuario actual
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        userGroupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("usuarios").child(currentUser.getUid()).child("grupos");
-        groupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("grupos");
+        // Inicializar referencias a la base de datos de Firebase
+        userGroupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference().child("usuarios").child(currentUser.getUid()).child("grupos");
+        groupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app")
+                .getReference().child("grupos");
 
+        // Inicializar la lista de grupos y el adaptador
         groupsList = new ArrayList<>();
         groupAdapter = new GroupAdapter(this, groupsList);
         groupsListView.setAdapter(groupAdapter);
 
+        // Cargar los grupos del usuario
         loadUserGroups();
 
+        // Configurar los botones de la interfaz de usuario
         createGroupButton.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardActivity.this, CreateGroupActivity.class);
             startActivity(intent);
@@ -78,6 +92,9 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para cargar los grupos del usuario desde la base de datos.
+     */
     private void loadUserGroups() {
         userGroupsReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,6 +119,10 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para cargar los detalles de un grupo específico desde la base de datos.
+     * @param groupId ID del grupo a cargar.
+     */
     private void loadGroupDetails(String groupId) {
         groupsReference.child(groupId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

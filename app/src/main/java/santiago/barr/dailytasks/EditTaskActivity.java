@@ -23,6 +23,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Actividad para editar una tarea existente. Permite cambiar el título, descripción, fecha de vencimiento, usuario asignado y estado de la tarea.
+ */
 public class EditTaskActivity extends AppCompatActivity {
 
     private EditText taskTitle, taskDescription, taskDueDate;
@@ -40,6 +43,7 @@ public class EditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
+        // Inicializar vistas
         taskTitle = findViewById(R.id.edit_task_title);
         taskDescription = findViewById(R.id.edit_task_description);
         taskDueDate = findViewById(R.id.edit_task_due_date);
@@ -59,8 +63,10 @@ public class EditTaskActivity extends AppCompatActivity {
             return;
         }
 
+        // Inicializar la referencia a la base de datos
         db = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference();
 
+        // Inicializar listas y adaptadores
         groupUsers = new ArrayList<>();
         userAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, groupUsers);
         userAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,15 +76,23 @@ public class EditTaskActivity extends AppCompatActivity {
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         taskStatus.setAdapter(statusAdapter);
 
+        // Cargar detalles de la tarea y usuarios del grupo
         loadTaskDetails(taskId, groupId);
         loadGroupUsers(groupId);
 
+        // Configurar el selector de fecha
         taskDueDate.setOnClickListener(v -> showDatePickerDialog());
 
+        // Configurar botones de actualización y eliminación de tarea
         updateTaskButton.setOnClickListener(v -> updateTask());
         deleteTaskButton.setOnClickListener(v -> deleteTask());
     }
 
+    /**
+     * Carga los detalles de una tarea desde la base de datos y los muestra en la interfaz.
+     * @param taskId ID de la tarea a cargar.
+     * @param groupId ID del grupo al que pertenece la tarea.
+     */
     private void loadTaskDetails(String taskId, String groupId) {
         db.child("grupos").child(groupId).child("tareas").child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -104,6 +118,10 @@ public class EditTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Carga los usuarios de un grupo desde la base de datos y los muestra en el spinner de usuarios.
+     * @param groupId ID del grupo cuyos usuarios se van a cargar.
+     */
     private void loadGroupUsers(String groupId) {
         db.child("grupos").child(groupId).child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -127,6 +145,9 @@ public class EditTaskActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Actualiza los detalles de la tarea en la base de datos.
+     */
     private void updateTask() {
         String selectedUser = userSpinner.getSelectedItem().toString();
         String title = taskTitle.getText().toString();
@@ -146,6 +167,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Elimina la tarea de la base de datos.
+     */
     private void deleteTask() {
         db.child("grupos").child(groupId).child("tareas").child(taskId).removeValue()
                 .addOnCompleteListener(task -> {
@@ -158,6 +182,9 @@ public class EditTaskActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Muestra un cuadro de diálogo de selector de fecha y establece la fecha seleccionada en el campo de fecha de vencimiento.
+     */
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);

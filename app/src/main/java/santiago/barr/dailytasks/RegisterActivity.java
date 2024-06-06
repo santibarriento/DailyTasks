@@ -18,10 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Actividad para el registro de nuevos usuarios en la aplicación.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText usernameEditText, emailEditText, passwordEditText;
-    private Button registerButton,backButton;
+    private Button registerButton, backButton;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseReference;
 
@@ -30,15 +33,21 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        // Inicializa los campos de texto y botones
         usernameEditText = findViewById(R.id.usernameEditText);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         registerButton = findViewById(R.id.registerButton);
+        backButton = findViewById(R.id.back_button);
 
+        // Inicializa Firebase Auth y DatabaseReference
         mAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        backButton = findViewById(R.id.back_button);
+
+        // Configura el botón de regreso
         backButton.setOnClickListener(v -> finish());
+
+        // Configura el botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,11 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para registrar un nuevo usuario.
+     */
     private void registerUser() {
         String username = usernameEditText.getText().toString().trim();
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
+        // Verifica que los campos no estén vacíos
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, "Por favor, ingresa un nombre de usuario", Toast.LENGTH_SHORT).show();
             return;
@@ -65,6 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Crea un nuevo usuario con correo electrónico y contraseña
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
@@ -74,6 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                     userData.put("username", username);
                     userData.put("email", email);
 
+                    // Guarda la información del usuario en la base de datos
                     databaseReference.child("usuarios").child(userId).setValue(userData)
                             .addOnCompleteListener(task1 -> {
                                 if (task1.isSuccessful()) {

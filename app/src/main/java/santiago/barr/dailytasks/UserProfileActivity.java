@@ -31,8 +31,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase que maneja la actividad del perfil de usuario.
+ * Permite ver y actualizar la información del usuario.
+ */
 public class UserProfileActivity extends AppCompatActivity {
 
+    // Declaración de variables para los elementos de la UI
     private ImageView userProfileImage;
     private TextView userName, userEmail;
     private Spinner userAge, userGender;
@@ -46,6 +51,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
+        // Inicialización de las vistas
         userProfileImage = findViewById(R.id.imageView);
         userName = findViewById(R.id.textViewNombre);
         userEmail = findViewById(R.id.textViewEmail);
@@ -58,10 +64,12 @@ public class UserProfileActivity extends AppCompatActivity {
         updateUserNameButton = findViewById(R.id.buttonUpdateUserName);
         backButton = findViewById(R.id.back_button);
 
+        // Inicialización de Firebase Auth y Database Helper
         mAuth = FirebaseAuth.getInstance();
         databaseHelper = new RealtimeDatabaseHelper(this);
         FirebaseUser user = mAuth.getCurrentUser();
 
+        // Configuración de las opciones del spinner de edad
         List<String> ageOptions = new ArrayList<>();
         for (int i = 18; i <= 99; i++) {
             ageOptions.add(Integer.toString(i));
@@ -86,7 +94,7 @@ public class UserProfileActivity extends AppCompatActivity {
         adapterAge.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userAge.setAdapter(adapterAge);
 
-
+        // Configuración de las opciones del spinner de género
         String[] genderArray = getResources().getStringArray(R.array.gender_options);
         ArrayAdapter<String> adapterGender = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, genderArray) {
             @NonNull
@@ -107,6 +115,7 @@ public class UserProfileActivity extends AppCompatActivity {
         adapterGender.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         userGender.setAdapter(adapterGender);
 
+        // Si el usuario está autenticado, cargar la información del perfil
         if (user != null) {
             userName.setText(user.getDisplayName());
             userEmail.setText(user.getEmail());
@@ -135,6 +144,7 @@ public class UserProfileActivity extends AppCompatActivity {
             });
         }
 
+        // Acción de cerrar sesión
         logoutButton.setOnClickListener(v -> {
             mAuth.signOut();
             Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
@@ -143,17 +153,23 @@ public class UserProfileActivity extends AppCompatActivity {
             finish();
         });
 
+        // Acción de regresar
         backButton.setOnClickListener(v -> finish());
 
+        // Acción de actualizar el perfil del usuario
         updateDataButton.setOnClickListener(v -> {
             updateUserProfile();
         });
 
+        // Acción de actualizar el nombre de usuario
         updateUserNameButton.setOnClickListener(v -> {
             updateUserName();
         });
     }
 
+    /**
+     * Método para actualizar el perfil del usuario.
+     */
     private void updateUserProfile() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
@@ -166,6 +182,9 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para actualizar el nombre de usuario.
+     */
     private void updateUserName() {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {

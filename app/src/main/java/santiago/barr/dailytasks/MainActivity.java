@@ -23,32 +23,37 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Actividad principal de la aplicación, maneja el inicio de sesión con Google.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_SIGN_IN = 9001;
-    private static final String TAG = "MainActivity";
-    private FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001; // Código de solicitud para el inicio de sesión
+    private static final String TAG = "MainActivity"; // Tag para logs
+    private FirebaseAuth mAuth; // Autenticación de Firebase
+    private GoogleSignInClient mGoogleSignInClient; // Cliente de inicio de sesión de Google
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseApp.initializeApp(this);
-        setContentView(R.layout.activity_login);
+        FirebaseApp.initializeApp(this); // Inicializar Firebase
+        setContentView(R.layout.activity_login); // Establecer el contenido de la vista
 
-        mAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance(); // Obtener instancia de FirebaseAuth
 
+        // Configuración de opciones de inicio de sesión de Google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso); // Inicializar cliente de inicio de sesión de Google
 
+        // Configurar el botón de inicio de sesión
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signIn();
+                signIn(); // Iniciar el proceso de inicio de sesión
             }
         });
     }
@@ -56,12 +61,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        // Verificar si el usuario ya ha iniciado sesión
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            updateUI(currentUser);
+            updateUI(currentUser); // Actualizar la interfaz de usuario si el usuario está autenticado
         }
     }
 
+    /**
+     * Inicia el flujo de inicio de sesión con Google.
+     */
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -72,17 +81,22 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
+            // Manejar el resultado del intento de inicio de sesión
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account);
+                firebaseAuthWithGoogle(account); // Autenticar con Firebase utilizando la cuenta de Google
             } catch (ApiException e) {
                 Log.w(TAG, "Google sign in failed", e);
-                updateUI(null);
+                updateUI(null); // Actualizar la interfaz de usuario en caso de fallo
             }
         }
     }
 
+    /**
+     * Autenticar con Firebase utilizando la cuenta de Google.
+     * @param acct La cuenta de Google.
+     */
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -91,16 +105,20 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            saveUserData(user);
-                            updateUI(user);
+                            saveUserData(user); // Guardar datos del usuario en Firestore
+                            updateUI(user); // Actualizar la interfaz de usuario
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            updateUI(null);
+                            updateUI(null); // Actualizar la interfaz de usuario en caso de fallo
                         }
                     }
                 });
     }
 
+    /**
+     * Guardar datos del usuario en Firebase Firestore.
+     * @param user El usuario autenticado.
+     */
     private void saveUserData(FirebaseUser user) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -125,12 +143,17 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Actualiza la interfaz de usuario en función del estado de autenticación del usuario.
+     * @param user El usuario autenticado.
+     */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
             startActivity(intent);
-            finish();
+            finish(); // Finalizar la actividad actual
         } else {
+            // Manejar el caso en que el usuario no esté autenticado
         }
     }
 }

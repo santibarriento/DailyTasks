@@ -20,8 +20,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que maneja la actividad de ver grupos.
+ * Muestra la lista de grupos a los que pertenece el usuario actual.
+ */
 public class ViewGroupsActivity extends AppCompatActivity {
 
+    // Declaración de variables para los elementos de la UI
     private TextView noGroupsMessage;
     private ListView groupsListView;
     private FirebaseAuth mAuth;
@@ -35,23 +40,33 @@ public class ViewGroupsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_groups);
 
+        // Inicialización de las vistas
         noGroupsMessage = findViewById(R.id.no_groups_message);
         groupsListView = findViewById(R.id.groups_list);
+        backButton = findViewById(R.id.back_button);
 
+        // Inicialización de Firebase Auth y referencias a la base de datos
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
         userGroupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("usuarios").child(currentUser.getUid()).child("grupos");
         groupsReference = FirebaseDatabase.getInstance("https://daily-tasks-eea7e-default-rtdb.europe-west1.firebasedatabase.app").getReference().child("grupos");
 
+        // Inicialización de la lista de grupos y adaptador
         groupsList = new ArrayList<>();
         groupAdapter = new GroupAdapter(this, groupsList);
         groupsListView.setAdapter(groupAdapter);
-        backButton = findViewById(R.id.back_button);
+
+        // Configuración del botón de regresar
         backButton.setOnClickListener(v -> finish());
+
+        // Cargar los grupos del usuario
         loadUserGroups();
     }
 
+    /**
+     * Método para cargar los grupos del usuario desde la base de datos.
+     */
     private void loadUserGroups() {
         userGroupsReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,6 +91,10 @@ public class ViewGroupsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Método para cargar los detalles de un grupo desde la base de datos.
+     * @param groupId ID del grupo cuyos detalles se van a cargar.
+     */
     private void loadGroupDetails(String groupId) {
         groupsReference.child(groupId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

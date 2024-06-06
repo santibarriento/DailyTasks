@@ -27,6 +27,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Actividad que muestra los detalles de un grupo seleccionado, incluyendo las tareas y los usuarios.
+ */
 public class GroupDetailActivity extends AppCompatActivity {
 
     private TextView groupNameDetail, groupDescriptionDetail;
@@ -48,6 +51,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
 
+        // Inicialización de vistas
         groupNameDetail = findViewById(R.id.group_name_detail);
         groupDescriptionDetail = findViewById(R.id.group_description_detail);
         backButton = findViewById(R.id.back_button);
@@ -76,6 +80,7 @@ public class GroupDetailActivity extends AppCompatActivity {
         loadGroupTasks(groupId);
         loadGroupUsers(groupId);
 
+        // Configuración de botones
         backButton.setOnClickListener(v -> finish());
 
         inviteMemberButton.setOnClickListener(v -> {
@@ -89,6 +94,9 @@ public class GroupDetailActivity extends AppCompatActivity {
         taskDueDate.setOnClickListener(v -> showDatePickerDialog());
     }
 
+    /**
+     * Crea una nueva tarea y la añade al grupo.
+     */
     private void createTask() {
         String selectedUser = userSpinner.getSelectedItem().toString();
         String title = taskTitle.getText().toString();
@@ -110,6 +118,11 @@ public class GroupDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Carga los detalles del grupo desde la base de datos.
+     *
+     * @param groupId ID del grupo a cargar.
+     */
     private void loadGroupDetails(String groupId) {
         db.child("grupos").child(groupId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -132,6 +145,11 @@ public class GroupDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Carga las tareas del grupo desde la base de datos.
+     *
+     * @param groupId ID del grupo.
+     */
     private void loadGroupTasks(String groupId) {
         DatabaseReference groupTasksRef = db.child("grupos").child(groupId).child("tareas");
         groupTasksRef.addValueEventListener(new ValueEventListener() {
@@ -156,6 +174,11 @@ public class GroupDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Carga los usuarios del grupo desde la base de datos.
+     *
+     * @param groupId ID del grupo.
+     */
     private void loadGroupUsers(String groupId) {
         db.child("grupos").child(groupId).child("usuarios").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -179,6 +202,9 @@ public class GroupDetailActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Muestra un cuadro de diálogo para seleccionar la fecha.
+     */
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);

@@ -20,39 +20,53 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+/**
+ * Actividad para gestionar el inicio de sesión con Google utilizando One Tap.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
-    private static final int REQ_ONE_TAP = 2;  // Unique request code
-    private SignInClient oneTapClient;
-    private FirebaseAuth mAuth;
+    private static final int REQ_ONE_TAP = 2;  // Código de solicitud único para One Tap
+    private SignInClient oneTapClient;  // Cliente de One Tap para gestionar el inicio de sesión
+    private FirebaseAuth mAuth;  // Autenticación de Firebase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-        oneTapClient = Identity.getSignInClient(this);
+        mAuth = FirebaseAuth.getInstance();  // Inicializar Firebase Auth
+        oneTapClient = Identity.getSignInClient(this);  // Inicializar el cliente de One Tap
     }
 
+    /**
+     * Método llamado cuando se hace clic en el botón de inicio de sesión.
+     * @param view La vista que fue clicada.
+     */
     public void ABRIMEELGOOGLE(View view) {
         Log.d(TAG, "Sign in button clicked");
         prepareOneTapSignIn();
     }
 
+    /**
+     * Prepara la solicitud de inicio de sesión con One Tap.
+     */
     private void prepareOneTapSignIn() {
         BeginSignInRequest signInRequest = BeginSignInRequest.builder()
                 .setGoogleIdTokenRequestOptions(BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
                         .setServerClientId(getString(R.string.default_web_client_id))
-                        .setFilterByAuthorizedAccounts(false)  // si no tiene cuenta en la base de datos la crea
+                        .setFilterByAuthorizedAccounts(false)  // Permitir crear cuenta si no existe
                         .build())
                 .build();
 
         displayOneTapUI(signInRequest);
     }
 
+    /**
+     * Muestra la interfaz de usuario de One Tap.
+     * @param request La solicitud de inicio de sesión.
+     */
     private void displayOneTapUI(BeginSignInRequest request) {
         oneTapClient.beginSignIn(request)
                 .addOnSuccessListener(this, result -> {
@@ -75,6 +89,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Maneja el resultado del intento de inicio de sesión.
+     * @param data Los datos del intento.
+     */
     private void handleSignInResult(Intent data) {
         try {
             SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(data);
@@ -89,6 +107,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Autentica el usuario con Firebase utilizando el ID token de Google.
+     * @param idToken El ID token de Google.
+     */
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
@@ -103,11 +125,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * Actualiza la interfaz de usuario en función del estado de autenticación del usuario.
+     * @param user El usuario autenticado.
+     */
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             Log.d(TAG, "User is signed in");
             Toast.makeText(this, "User is signed in", Toast.LENGTH_SHORT).show();
-            // va al DashboardActivity
+            // Navega a DashboardActivity
             Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             startActivity(intent);
             finish();

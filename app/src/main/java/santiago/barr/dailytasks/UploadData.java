@@ -15,11 +15,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+/**
+ * Clase para manejar la carga y gestión de datos en Firestore.
+ */
 public class UploadData {
+
+    // Interfaz de callback para obtener datos del usuario
     public interface DatosUsuarioCallback {
         void onCallback(String nombre, String email, String genero, String edad);
     }
 
+    /**
+     * Método para subir los datos del usuario a Firestore.
+     *
+     * @param textViewNombre  TextView que contiene el nombre del usuario.
+     * @param textViewEmail   TextView que contiene el email del usuario.
+     * @param spinnerAge      Spinner que contiene la edad del usuario.
+     * @param spinnerGender   Spinner que contiene el género del usuario.
+     */
     public static void uploadUserData(@NonNull TextView textViewNombre, TextView textViewEmail, Spinner spinnerAge, Spinner spinnerGender) {
         // instancia de firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +59,11 @@ public class UploadData {
                 });
     }
 
+    /**
+     * Método para incrementar el contador de una ubicación seleccionada en Firestore.
+     *
+     * @param selectedLocation La ubicación seleccionada.
+     */
     public static void incrementLocationCounter(String selectedLocation) {
         // Obtener la instancia de Firestore
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -91,10 +109,16 @@ public class UploadData {
         });
     }
 
+    // Instancia de FirebaseFirestore
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    /**
+     * Método para obtener los datos del usuario actual desde Firestore.
+     *
+     * @param email    El email del usuario.
+     * @param callback El callback para manejar los datos obtenidos.
+     */
     public static void obtenerDatosUsuarioActual(String email, DatosUsuarioCallback callback) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("usuario").document(email)
                 .get()
                 .addOnCompleteListener(task -> {
@@ -114,6 +138,16 @@ public class UploadData {
                     }
                 });
     }
+
+    /**
+     * Método para subir los datos del usuario con series a Firestore.
+     *
+     * @param nombre        El nombre del usuario.
+     * @param email         El email del usuario.
+     * @param genero        El género del usuario.
+     * @param edad          La edad del usuario.
+     * @param numberOfSeries El número de series del usuario.
+     */
     public static void subirDatosUsuarioConSeries(String nombre, String email, String genero, String edad, int numberOfSeries) {
         Map<String, Object> datosUsuario = new HashMap<>();
         datosUsuario.put("nombre", nombre);
